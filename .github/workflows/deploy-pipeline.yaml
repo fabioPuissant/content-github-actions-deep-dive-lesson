@@ -49,7 +49,7 @@ jobs:
     runs-ons: ubuntu-latest
     steps:
       - name: create release
-        uses: actions/create-release
+        uses: actions/create-release@v1
         env: 
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with: # are the params
