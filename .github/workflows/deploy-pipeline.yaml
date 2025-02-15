@@ -1,4 +1,8 @@
 name: Lab Linting and Building
+on: 
+  push:
+    paths:
+      - .guthub/workflows/deploy-pipeline.yaml
 
 jobs:
 
