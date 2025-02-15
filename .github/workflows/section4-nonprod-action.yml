@@ -107,7 +107,7 @@ jobs:
         run: |
             aws lambda update-function-code \
               --function-name ${{ variables.LAMBDA_FUNCTION_NAME }} \
-              --s3-bucket <${{ secrets.S3_BUCKET_NAME }}> \
+              --s3-bucket ${{ variables.S3_BUCKET_NAME }} \
               --s3-key ${{ github.repository }}/${{ github.sha }}.zip \
               --publish
 
