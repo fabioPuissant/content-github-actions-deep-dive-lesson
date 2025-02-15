@@ -83,7 +83,7 @@ jobs:
   #     - name: Create test function
   #       run: |
   #           aws lambda create-function --function-name test-function \
-  #             --code S3Bucket=${{ variables.S3_BUCKET_NAME }},S3Key=${{ github.repository }}/${{ github.sha }}.zip \
+  #             --code S3Bucket=${{ env.S3_BUCKET_NAME }},S3Key=${{ github.repository }}/${{ github.sha }}.zip \
   #             --handler lambda_function.lambda_handler --runtime python3.8 \
   #             --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/<YOUR ROLE NAME HERE>
   #     - name: Wait 30 seconds
@@ -106,8 +106,8 @@ jobs:
       - name: Update function code
         run: |
             aws lambda update-function-code \
-              --function-name ${{ variables.LAMBDA_FUNCTION_NAME }} \
-              --s3-bucket ${{ variables.S3_BUCKET_NAME }} \
+              --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+              --s3-bucket ${{ env.S3_BUCKET_NAME }} \
               --s3-key ${{ github.repository }}/${{ github.sha }}.zip \
               --publish
 
