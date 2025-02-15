@@ -62,7 +62,7 @@ jobs:
         with:
           name: zipped-bundle
       - name: Echo double
-        run: echo ${{ env.S3_BUCKET_NAME }}; echo "single $S3_BUCKET_NAME"
+        run: echo ${{ vars.S3_BUCKET_NAME }}; echo "single $S3_BUCKET_NAME"
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -70,7 +70,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Upload to S3
-        run: aws s3 cp ${{ github.sha }}.zip s3://${{ env.S3_BUCKET_NAME }}/${{ github.repository }}/${{ github.sha }}.zip
+        run: aws s3 cp ${{ github.sha }}.zip s3://${{ vars.S3_BUCKET_NAME }}/${{ github.repository }}/${{ github.sha }}.zip
 
   # nonprod:
   #   runs-on: ubuntu-latest
@@ -85,7 +85,7 @@ jobs:
   #     - name: Create test function
   #       run: |
   #           aws lambda create-function --function-name test-function \
-  #             --code S3Bucket=${{ env.S3_BUCKET_NAME }},S3Key=${{ github.repository }}/${{ github.sha }}.zip \
+  #             --code S3Bucket=${{ vars.S3_BUCKET_NAME }},S3Key=${{ github.repository }}/${{ github.sha }}.zip \
   #             --handler lambda_function.lambda_handler --runtime python3.8 \
   #             --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/<YOUR ROLE NAME HERE>
   #     - name: Wait 30 seconds
@@ -108,8 +108,8 @@ jobs:
       - name: Update function code
         run: |
             aws lambda update-function-code \
-              --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
-              --s3-bucket ${{ env.S3_BUCKET_NAME }} \
+              --function-name ${{ vars.LAMBDA_FUNCTION_NAME }} \
+              --s3-bucket ${{ vars.S3_BUCKET_NAME }} \
               --s3-key ${{ github.repository }}/${{ github.sha }}.zip \
               --publish
 
