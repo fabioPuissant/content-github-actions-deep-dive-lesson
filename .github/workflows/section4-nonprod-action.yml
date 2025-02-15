@@ -61,8 +61,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: zipped-bundle
-      - name: Echo double
-        run: echo ${{ vars.S3_BUCKET_NAME }}; echo "single $S3_BUCKET_NAME"
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
