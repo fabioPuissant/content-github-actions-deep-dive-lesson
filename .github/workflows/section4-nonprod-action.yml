@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.10
       - name: Install linting libraries
         run: |
             cd function
@@ -37,7 +37,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.10
       - name: Install libraries
         run: |
             cd function
@@ -84,7 +84,7 @@ jobs:
         run: |
             aws lambda create-function --function-name test-function \
               --code S3Bucket=${{ vars.S3_BUCKET_NAME }},S3Key=${{ github.repository }}/${{ github.sha }}.zip \
-              --handler lambda_function.lambda_handler --runtime python3.8 \
+              --handler lambda_function.lambda_handler --runtime python3.10 \
               --role ${{ secrets.AWS_LAMBDA_ROLE_ARN }} 
       - name: Wait 30 seconds
         run: sleep 30
@@ -95,7 +95,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: upload
+    needs: nonprod
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
